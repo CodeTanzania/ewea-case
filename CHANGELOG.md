@@ -1,3 +1,17 @@
+#### 0.2.0 (2020-06-04)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([0737d7b1](https://github.com/codetanzania/ewea-case/commit/0737d7b14230186b3610ba4a1268504850ef9317))
+
+##### New Features
+
+* **model:**  add victim nationality ([87be7c58](https://github.com/codetanzania/ewea-case/commit/87be7c58c28f901aabf733ad3b064fb8efabad91))
+
+##### Refactors
+
+* **model:**  add gender, occupation & nationality defaults ([7ac45896](https://github.com/codetanzania/ewea-case/commit/7ac458964c801c8a2cd0d670660f3fdd026edc50))
+
 #### 0.1.0 (2020-06-02)
 
 ##### New Features
