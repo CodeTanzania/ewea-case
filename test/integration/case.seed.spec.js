@@ -1,7 +1,7 @@
 import path from 'path';
 import { first } from 'lodash';
 import { clear, expect } from '@lykmapipo/mongoose-test-helpers';
-import { seedCommons } from '@codetanzania/ewea-common';
+import { seedCommons, seedDefaults } from '@codetanzania/ewea-common';
 import { Case } from '../../src';
 
 describe('Case Seed', () => {
@@ -14,6 +14,7 @@ describe('Case Seed', () => {
     process.env.SEED_PATH = path.join(__dirname, '..', 'fixtures');
   });
 
+  before((done) => seedDefaults(done));
   before((done) => seedCommons(done));
 
   it('should be able to seed', (done) => {

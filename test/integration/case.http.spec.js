@@ -9,7 +9,7 @@ import {
 } from '@lykmapipo/mongoose-test-helpers';
 import { Predefine } from '@lykmapipo/predefine';
 import { createModels } from '@lykmapipo/file';
-import { seedCommons } from '@codetanzania/ewea-common';
+import { seedCommons, seedDefaults } from '@codetanzania/ewea-common';
 import { Party } from '@codetanzania/emis-stakeholder';
 import { Case, caseRouter } from '../../src';
 
@@ -33,6 +33,7 @@ describe('Case Rest API', () => {
 
   beforeEach(() => createModels());
 
+  before((done) => seedDefaults(done));
   before((done) => seedCommons(done));
   before((done) => create(area, done));
   before((done) => create(reporter, done));

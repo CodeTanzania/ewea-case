@@ -1,3 +1,10 @@
+import {
+  PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA,
+  PREDEFINE_NAMESPACE_PARTYGENDER,
+  PREDEFINE_NAMESPACE_PARTYOCCUPATION,
+  PREDEFINE_NAMESPACE_PARTYNATIONALITY,
+} from '@codetanzania/ewea-internals';
+import { DEFAULT_SEEDS } from '@codetanzania/ewea-common';
 import { compact } from '@lykmapipo/common';
 import { Point } from 'mongoose-geojson-schemas';
 import { ObjectId, createSubSchema } from '@lykmapipo/mongoose-common';
@@ -275,6 +282,7 @@ export const area = {
     order: 3,
     default: 'NA',
   },
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA],
 };
 
 /**
@@ -352,7 +360,7 @@ export const gender = {
     order: 2,
     default: 'NA',
   },
-  default: undefined,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYGENDER],
 };
 
 /**
@@ -392,7 +400,7 @@ export const occupation = {
     order: 2,
     default: 'NA',
   },
-  default: undefined,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYOCCUPATION],
 };
 
 /**
@@ -432,7 +440,7 @@ export const nationality = {
     order: 2,
     default: 'NA',
   },
-  default: undefined,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYNATIONALITY],
 };
 
 /**
