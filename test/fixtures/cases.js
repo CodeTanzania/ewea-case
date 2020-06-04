@@ -32,12 +32,19 @@ const cases = [
       },
       'victim.occupation': {
         match: {
-          namespace: 'PartyGender',
+          namespace: 'PartyOccupation',
           'strings.name.en': 'Health Care Worker',
         },
         model: 'Predefine',
       },
-      'victiom.area': {
+      'victim.nationality': {
+        match: {
+          namespace: 'PartyNationality',
+          'strings.name.en': 'Tanzanian',
+        },
+        model: 'Predefine',
+      },
+      'victim.area': {
         match: { namespace: 'AdministrativeArea', 'strings.name.en': 'Ilala' },
         model: 'Predefine',
       },
