@@ -1,5 +1,6 @@
 import { SchemaTypes } from '@lykmapipo/mongoose-common';
 import { expect } from '@lykmapipo/mongoose-test-helpers';
+import { Predefine } from '@lykmapipo/predefine';
 import { Party } from '@codetanzania/emis-stakeholder';
 import Case from '../../src/case.model';
 
@@ -28,6 +29,8 @@ describe('Case Schema', () => {
     const pcr = Case.path('victim.pcr');
     const name = Case.path('victim.name');
     const mobile = Case.path('victim.mobile');
+    const occupation = Case.path('victim.occupation');
+    const nationality = Case.path('victim.nationality');
     const nextOfKinName = Case.path('victim.nextOfKin.name');
     const nextOfKinMobile = Case.path('victim.nextOfKin.mobile');
 
@@ -81,6 +84,38 @@ describe('Case Schema', () => {
     expect(mobile.options.taggable).to.be.true;
     expect(mobile.options.exportable).to.be.true;
     expect(mobile.options.fake).to.exist;
+
+    expect(occupation).to.exist;
+    expect(occupation).to.be.instanceof(SchemaTypes.ObjectId);
+    expect(occupation.options).to.exist;
+    expect(occupation.options).to.be.an('object');
+    expect(occupation.options.type).to.exist;
+    expect(occupation.options.ref).to.exist;
+    expect(occupation.options.ref).to.be.equal(Predefine.MODEL_NAME);
+    expect(occupation.options.index).to.be.true;
+    // expect(occupation.options.required).to.be.true;
+    expect(occupation.options.exists).to.be.true;
+    expect(occupation.options.autopopulate).to.exist;
+    expect(occupation.options.taggable).to.exist;
+    expect(occupation.options.exportable).to.exist;
+    expect(occupation.options.aggregatable).to.exist;
+    expect(occupation.options.default).to.be.undefined;
+
+    expect(nationality).to.exist;
+    expect(nationality).to.be.instanceof(SchemaTypes.ObjectId);
+    expect(nationality.options).to.exist;
+    expect(nationality.options).to.be.an('object');
+    expect(nationality.options.type).to.exist;
+    expect(nationality.options.ref).to.exist;
+    expect(nationality.options.ref).to.be.equal(Predefine.MODEL_NAME);
+    expect(nationality.options.index).to.be.true;
+    // expect(nationality.options.required).to.be.true;
+    expect(nationality.options.exists).to.be.true;
+    expect(nationality.options.autopopulate).to.exist;
+    expect(nationality.options.taggable).to.exist;
+    expect(nationality.options.exportable).to.exist;
+    expect(nationality.options.aggregatable).to.exist;
+    expect(nationality.options.default).to.be.undefined;
 
     expect(nextOfKinName).to.exist;
     expect(nextOfKinName).to.be.instanceof(SchemaTypes.String);
