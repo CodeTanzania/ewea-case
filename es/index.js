@@ -1,4 +1,4 @@
-import { COLLECTION_NAME_CASE, POPULATION_MAX_DEPTH, MODEL_NAME_CASE } from '@codetanzania/ewea-internals';
+import { COLLECTION_NAME_CASE, POPULATION_MAX_DEPTH, PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA, PREDEFINE_NAMESPACE_PARTYGENDER, PREDEFINE_NAMESPACE_PARTYOCCUPATION, PREDEFINE_NAMESPACE_PARTYNATIONALITY, MODEL_NAME_CASE } from '@codetanzania/ewea-internals';
 import { compact, mergeObjects, idOf, pkg } from '@lykmapipo/common';
 import { getString, apiVersion as apiVersion$1 } from '@lykmapipo/env';
 import { ObjectId, createSubSchema, model, createSchema, copyInstance, connect } from '@lykmapipo/mongoose-common';
@@ -12,6 +12,7 @@ import exportable from '@lykmapipo/mongoose-exportable';
 import moment from 'moment';
 import { Predefine } from '@lykmapipo/predefine';
 import { Event } from '@codetanzania/ewea-event';
+import { DEFAULT_SEEDS } from '@codetanzania/ewea-common';
 import 'mongoose-geojson-schemas';
 import { Party } from '@codetanzania/emis-stakeholder';
 
@@ -565,6 +566,7 @@ const area = {
     order: 3,
     default: 'NA',
   },
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA],
 };
 
 /**
@@ -618,7 +620,7 @@ const facility = {
  * @property {boolean} taggable - allow field use for tagging
  * @property {boolean} default - default value set when none provided
  *
- * @since 2.6.0
+ * @since 0.1.0
  * @version 0.1.0
  * @instance
  * @example
@@ -642,7 +644,7 @@ const gender = {
     order: 2,
     default: 'NA',
   },
-  default: undefined,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYGENDER],
 };
 
 /**
@@ -658,7 +660,7 @@ const gender = {
  * @property {boolean} taggable - allow field use for tagging
  * @property {boolean} default - default value set when none provided
  *
- * @since 2.6.0
+ * @since 0.1.0
  * @version 0.1.0
  * @instance
  * @example
@@ -682,7 +684,47 @@ const occupation = {
     order: 2,
     default: 'NA',
   },
-  default: undefined,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYOCCUPATION],
+};
+
+/**
+ * @name nationality
+ * @description Assignable or given nationality to a party.
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {string} ref - referenced collection
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - population options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} default - default value set when none provided
+ *
+ * @since 0.2.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   "name": { "en" : "Tanzanian" }
+ * }
+ */
+const nationality = {
+  type: ObjectId,
+  ref: Predefine.MODEL_NAME,
+  index: true,
+  exists: true,
+  aggregatable: { unwind: true },
+  autopopulate: AUTOPOPULATE_OPTION_PREDEFINE,
+  taggable: true,
+  exportable: {
+    header: 'Nationality',
+    format: (v) => {
+      return v && v.strings && compact([v.strings.name.en]).join(' - ');
+    },
+    order: 2,
+    default: 'NA',
+  },
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYNATIONALITY],
 };
 
 /**
@@ -724,11 +766,13 @@ const nextOfKin = createSubSchema({
  * @property {object} gender - Gender of the victim
  * @property {number} age - Age of the victim
  * @property {number} weight - Weight of the victim
+ * @property {object} occupation - Occupation of the victim
+ * @property {object} nationality - Nationality of the victim
  * @property {string} address - Address of the victim
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @instance
  * @example
  * {
@@ -739,6 +783,8 @@ const nextOfKin = createSubSchema({
  *   gender: { name: { en: "Female"} },
  *   age: 23,
  *   weight: 53,
+ *   occupation: { name: { en: "Businessman"} },
+ *   nationality: { name: { en: "Tanzanian"} },
  *   address: "Tandale",
  *   area: { name: { en: "Dar es Salaam"} },
  *   nextOfKin: { name: "Halima Mdoe", mobile: "+255715463740" }
@@ -750,10 +796,11 @@ const victim = createSubSchema({
   name,
   mobile,
   gender,
-  occupation,
   age,
   // dob
   weight,
+  occupation,
+  nationality,
   address,
   area,
   nextOfKin,
