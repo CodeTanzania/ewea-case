@@ -16,7 +16,7 @@ import {
 } from './internals';
 
 import { number, description, remarks } from './schema/base.schema';
-import { victim } from './schema/common.schema';
+import { victim, followup } from './schema/common.schema';
 import { reporter, resolver } from './schema/parties.schema';
 import { reportedAt, resolvedAt } from './schema/dates.schema';
 
@@ -26,6 +26,7 @@ const SCHEMA = mergeObjects(
   { description },
   { reportedAt, reporter },
   { resolvedAt, resolver },
+  { followup },
   { remarks }
 );
 

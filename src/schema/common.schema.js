@@ -7,13 +7,43 @@ import {
 import { DEFAULT_SEEDS } from '@codetanzania/ewea-common';
 import { compact } from '@lykmapipo/common';
 import { Point } from 'mongoose-geojson-schemas';
-import { ObjectId, createSubSchema } from '@lykmapipo/mongoose-common';
+import { ObjectId, Mixed, createSubSchema } from '@lykmapipo/mongoose-common';
 import { Predefine } from '@lykmapipo/predefine';
 
 import {
   AUTOPOPULATE_OPTION_PREDEFINE,
   AUTOPOPULATE_OPTION_AREA,
 } from '../internals';
+
+import { follower } from './parties.schema';
+import { followedAt } from './dates.schema';
+import { outcome, remarks } from './base.schema';
+
+/**
+ * @name properties
+ * @description A map of key value pairs to allow to associate
+ * other meaningful information to a case.
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.2.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   "population": {
+ *     "male": 1700000,
+ *     "female": 2700000
+ *    }
+ * }
+ */
+export const properties = {
+  type: Map,
+  of: Mixed,
+  fake: (f) => f.helpers.createTransaction(),
+};
 
 /**
  * @name name
@@ -520,4 +550,41 @@ export const victim = createSubSchema({
   address,
   area,
   nextOfKin,
+});
+
+/**
+ * @name victim
+ * @description A party(i.e patient or victim) whom a case is for.
+ *
+ * @type {object}
+ * @property {string} referral - Valid referral number
+ * @property {string} pcr - Valid patient care number
+ * @property {string} name - Full name of the victim
+ * @property {string} mobile - Mobile phone number of the victim
+ * @property {object} gender - Gender of the victim
+ * @property {number} age - Age of the victim
+ * @property {number} weight - Weight of the victim
+ * @property {object} occupation - Occupation of the victim
+ * @property {object} nationality - Nationality of the victim
+ * @property {string} address - Address of the victim
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.2.0
+ * @instance
+ * @example
+ * {
+ *   follower: {_id: "5bcda2c073dd0700048fb846", name: "Jane Doe" }
+ *   followedAt: '2018-10-19T07:55:32.831Z',
+ *   symptoms: { cough: 5 },
+ *   outcome: 'Hospital',
+ *   remarks: 'Handled'
+ * }
+ */
+export const followup = createSubSchema({
+  follower,
+  followedAt,
+  symptoms: properties,
+  outcome,
+  remarks,
 });

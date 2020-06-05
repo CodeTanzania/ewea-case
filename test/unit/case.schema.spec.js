@@ -252,4 +252,31 @@ describe('Case Schema', () => {
     expect(remarks.options.exportable).to.be.true;
     expect(remarks.options.fake).to.exist;
   });
+
+  it('should have followup field', () => {
+    const followup = Case.path('followup');
+    const follower = Case.path('followup.follower');
+    const followedAt = Case.path('followup.followedAt');
+    const symptoms = Case.path('followup.symptoms');
+    const outcome = Case.path('followup.outcome');
+    const remarks = Case.path('followup.remarks');
+
+    expect(followup).to.exist;
+    expect(followup).to.be.an.instanceof(SchemaTypes.Embedded);
+
+    expect(follower).to.exist;
+    expect(follower).to.be.instanceof(SchemaTypes.ObjectId);
+
+    expect(followedAt).to.exist;
+    expect(followedAt).to.be.instanceof(SchemaTypes.Date);
+
+    expect(symptoms).to.exist;
+    expect(symptoms).to.be.instanceof(SchemaTypes.Map);
+
+    expect(outcome).to.exist;
+    expect(outcome).to.be.instanceof(SchemaTypes.String);
+
+    expect(remarks).to.exist;
+    expect(remarks).to.be.instanceof(SchemaTypes.String);
+  });
 });

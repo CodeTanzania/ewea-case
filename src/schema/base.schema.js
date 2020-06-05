@@ -263,3 +263,36 @@ export const remarks = {
     type: 'sentence',
   },
 };
+
+/**
+ * @name outcome
+ * @description An outcome of about a case followup.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * Home
+ */
+export const outcome = {
+  type: String,
+  trim: true,
+  index: true,
+  searchable: true,
+  exportable: true,
+  fake: {
+    generator: 'lorem',
+    type: 'sentence',
+  },
+};
