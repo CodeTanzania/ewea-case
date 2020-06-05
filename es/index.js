@@ -1,7 +1,7 @@
 import { COLLECTION_NAME_CASE, POPULATION_MAX_DEPTH, PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA, PREDEFINE_NAMESPACE_PARTYGENDER, PREDEFINE_NAMESPACE_PARTYOCCUPATION, PREDEFINE_NAMESPACE_PARTYNATIONALITY, MODEL_NAME_CASE } from '@codetanzania/ewea-internals';
 import { compact, mergeObjects, idOf, pkg } from '@lykmapipo/common';
 import { getString, apiVersion as apiVersion$1 } from '@lykmapipo/env';
-import { ObjectId, createSubSchema, model, createSchema, copyInstance, connect } from '@lykmapipo/mongoose-common';
+import { ObjectId, createSubSchema, Mixed, model, createSchema, copyInstance, connect } from '@lykmapipo/mongoose-common';
 import { mount } from '@lykmapipo/express-common';
 import { Router, getFor, schemaFor, downloadFor, postFor, getByIdFor, patchFor, putFor, deleteFor, start as start$1 } from '@lykmapipo/express-rest-actions';
 import { createModels } from '@lykmapipo/file';
@@ -319,6 +319,292 @@ const remarks = {
     generator: 'lorem',
     type: 'sentence',
   },
+};
+
+/**
+ * @name outcome
+ * @description An outcome of about a case followup.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * Home
+ */
+const outcome = {
+  type: String,
+  trim: true,
+  index: true,
+  searchable: true,
+  exportable: true,
+  fake: {
+    generator: 'lorem',
+    type: 'sentence',
+  },
+};
+
+/**
+ * @name reporter
+ * @description A party(i.e call center or EOC operator) who
+ * recorded a case.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} required - mark required
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - auto populate(eager loading) options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {boolean} aggregatable - allow field use for aggregation
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   _id: "5bcda2c073dd0700048fb846",
+ *   name: "Jane Doe",
+ *   mobile: "+255715463739",
+ *   email: "jane.doe@example.com",
+ * }
+ */
+const reporter = {
+  type: ObjectId,
+  ref: Party.MODEL_NAME,
+  // required: true,
+  index: true,
+  exists: true,
+  autopopulate: AUTOPOPULATE_OPTION_PARTY,
+  taggable: true,
+  exportable: {
+    format: (v) => get(v, 'name'),
+    default: 'NA',
+  },
+  aggregatable: { unwind: true },
+  default: undefined,
+};
+
+/**
+ * @name resolver
+ * @description A party(i.e call center or EOC operator) who
+ * resolve(i.e discharge) a case.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} required - mark required
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - auto populate(eager loading) options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {boolean} aggregatable - allow field use for aggregation
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   _id: "5bcda2c073dd0700048fb846",
+ *   name: "Jane Doe",
+ *   mobile: "+255715463739",
+ *   email: "jane.doe@example.com",
+ * }
+ */
+const resolver = {
+  type: ObjectId,
+  ref: Party.MODEL_NAME,
+  // required: true,
+  index: true,
+  exists: true,
+  autopopulate: AUTOPOPULATE_OPTION_PARTY,
+  taggable: true,
+  exportable: {
+    format: (v) => get(v, 'name'),
+    default: 'NA',
+  },
+  aggregatable: { unwind: true },
+  default: undefined,
+};
+
+/**
+ * @name follower
+ * @description A party(i.e call center or EOC operator) who
+ * made a latest follow-up on a case.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} required - mark required
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - auto populate(eager loading) options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {boolean} aggregatable - allow field use for aggregation
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   _id: "5bcda2c073dd0700048fb846",
+ *   name: "Jane Doe",
+ *   mobile: "+255715463739",
+ *   email: "jane.doe@example.com",
+ * }
+ */
+const follower = {
+  type: ObjectId,
+  ref: Party.MODEL_NAME,
+  // required: true,
+  index: true,
+  exists: true,
+  autopopulate: AUTOPOPULATE_OPTION_PARTY,
+  taggable: true,
+  exportable: {
+    format: (v) => get(v, 'name'),
+    default: 'NA',
+  },
+  aggregatable: { unwind: true },
+  default: undefined,
+};
+
+// TODO: map them against case statuses
+
+/**
+ * @name reportedAt
+ * @description Date when a case was recorded(or requested).
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} index - ensure database index
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * 2018-10-17T07:53:32.831Z
+ */
+const reportedAt = {
+  type: Date,
+  index: true,
+  exportable: true,
+  fake: {
+    generator: 'date',
+    type: 'past',
+  },
+};
+
+/**
+ * @name resolvedAt
+ * @description Date when a case resolved(i.e discharged).
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} index - ensure database index
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * 2018-10-19T07:55:32.831Z
+ */
+const resolvedAt = {
+  type: Date,
+  index: true,
+  exportable: true,
+  fake: {
+    generator: 'date',
+    type: 'recent',
+  },
+};
+
+/**
+ * @name followedAt
+ * @description Latest date when a case followed up after discharged.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} index - ensure database index
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.3.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * 2018-10-19T07:55:32.831Z
+ */
+const followedAt = {
+  type: Date,
+  index: true,
+  exportable: true,
+  fake: {
+    generator: 'date',
+    type: 'recent',
+  },
+};
+
+/**
+ * @name properties
+ * @description A map of key value pairs to allow to associate
+ * other meaningful information to a case.
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.2.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   "population": {
+ *     "male": 1700000,
+ *     "female": 2700000
+ *    }
+ * }
+ */
+const properties = {
+  type: Map,
+  of: Mixed,
+  fake: (f) => f.helpers.createTransaction(),
 };
 
 /**
@@ -807,156 +1093,41 @@ const victim = createSubSchema({
 });
 
 /**
- * @name reporter
- * @description A party(i.e call center or EOC operator) who
- * recorded a case.
- *
- * @memberof Case
+ * @name victim
+ * @description A party(i.e patient or victim) whom a case is for.
  *
  * @type {object}
- * @property {object} type - schema(data) type
- * @property {boolean} required - mark required
- * @property {boolean} index - ensure database index
- * @property {boolean} exists - ensure ref exists before save
- * @property {object} autopopulate - auto populate(eager loading) options
- * @property {boolean} taggable - allow field use for tagging
- * @property {boolean} exportable - allow field use for exporting
- * @property {boolean} aggregatable - allow field use for aggregation
- * @property {boolean} default - default value set when none provided
- * @property {object} fake - fake data generator options
+ * @property {string} referral - Valid referral number
+ * @property {string} pcr - Valid patient care number
+ * @property {string} name - Full name of the victim
+ * @property {string} mobile - Mobile phone number of the victim
+ * @property {object} gender - Gender of the victim
+ * @property {number} age - Age of the victim
+ * @property {number} weight - Weight of the victim
+ * @property {object} occupation - Occupation of the victim
+ * @property {object} nationality - Nationality of the victim
+ * @property {string} address - Address of the victim
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @instance
  * @example
  * {
- *   _id: "5bcda2c073dd0700048fb846",
- *   name: "Jane Doe",
- *   mobile: "+255715463739",
- *   email: "jane.doe@example.com",
+ *   follower: {_id: "5bcda2c073dd0700048fb846", name: "Jane Doe" }
+ *   followedAt: '2018-10-19T07:55:32.831Z',
+ *   symptoms: { cough: 5 },
+ *   outcome: 'Hospital',
+ *   remarks: 'Handled'
  * }
  */
-const reporter = {
-  type: ObjectId,
-  ref: Party.MODEL_NAME,
-  // required: true,
-  index: true,
-  exists: true,
-  autopopulate: AUTOPOPULATE_OPTION_PARTY,
-  taggable: true,
-  exportable: {
-    format: (v) => get(v, 'name'),
-    default: 'NA',
-  },
-  aggregatable: { unwind: true },
-  default: undefined,
-};
-
-/**
- * @name resolver
- * @description A party(i.e call center or EOC operator) who
- * resolve(i.e discharge) a case.
- *
- * @memberof Case
- *
- * @type {object}
- * @property {object} type - schema(data) type
- * @property {boolean} required - mark required
- * @property {boolean} index - ensure database index
- * @property {boolean} exists - ensure ref exists before save
- * @property {object} autopopulate - auto populate(eager loading) options
- * @property {boolean} taggable - allow field use for tagging
- * @property {boolean} exportable - allow field use for exporting
- * @property {boolean} aggregatable - allow field use for aggregation
- * @property {boolean} default - default value set when none provided
- * @property {object} fake - fake data generator options
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @since 0.1.0
- * @version 0.1.0
- * @instance
- * @example
- * {
- *   _id: "5bcda2c073dd0700048fb846",
- *   name: "Jane Doe",
- *   mobile: "+255715463739",
- *   email: "jane.doe@example.com",
- * }
- */
-const resolver = {
-  type: ObjectId,
-  ref: Party.MODEL_NAME,
-  // required: true,
-  index: true,
-  exists: true,
-  autopopulate: AUTOPOPULATE_OPTION_PARTY,
-  taggable: true,
-  exportable: {
-    format: (v) => get(v, 'name'),
-    default: 'NA',
-  },
-  aggregatable: { unwind: true },
-  default: undefined,
-};
-
-// TODO: map them against case statuses
-
-/**
- * @name reportedAt
- * @description Date when a case was recorded(or requested).
- *
- * @memberof Case
- *
- * @type {object}
- * @property {object} type - schema(data) type
- * @property {boolean} index - ensure database index
- * @property {object} fake - fake data generator options
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @since 0.1.0
- * @version 0.1.0
- * @instance
- * @example
- * 2018-10-17T07:53:32.831Z
- */
-const reportedAt = {
-  type: Date,
-  index: true,
-  exportable: true,
-  fake: {
-    generator: 'date',
-    type: 'past',
-  },
-};
-
-/**
- * @name resolvedAt
- * @description Date when a case resolved(i.e discharged).
- *
- * @memberof Case
- *
- * @type {object}
- * @property {object} type - schema(data) type
- * @property {boolean} index - ensure database index
- * @property {object} fake - fake data generator options
- *
- * @author lally elias <lallyelias87@gmail.com>
- * @since 0.1.0
- * @version 0.1.0
- * @instance
- * @example
- * 2018-10-19T07:55:32.831Z
- */
-const resolvedAt = {
-  type: Date,
-  index: true,
-  exportable: true,
-  fake: {
-    generator: 'date',
-    type: 'recent',
-  },
-};
+const followup = createSubSchema({
+  follower,
+  followedAt,
+  symptoms: properties,
+  outcome,
+  remarks,
+});
 
 const SCHEMA = mergeObjects(
   { number },
@@ -964,6 +1135,7 @@ const SCHEMA = mergeObjects(
   { description },
   { reportedAt, reporter },
   { resolvedAt, resolver },
+  { followup },
   { remarks }
 );
 
