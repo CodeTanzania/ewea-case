@@ -1,3 +1,13 @@
+#### 0.3.0 (2020-06-05)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([b73801cb](https://github.com/codetanzania/ewea-case/commit/b73801cb6880546adce6ecefacca3f487edf09c2))
+
+##### New Features
+
+* **case:**  add followup schema ([0a9b6db6](https://github.com/codetanzania/ewea-case/commit/0a9b6db64f9e29a8c651ce31e6e38126aed287d6))
+
 #### 0.2.0 (2020-06-04)
 
 ##### Chores
