@@ -1,3 +1,19 @@
+#### 0.4.0 (2020-06-08)
+
+##### Chores
+
+* **deps:**
+  *  force latest version & audit fix ([b5e2c735](https://github.com/codetanzania/ewea-case/commit/b5e2c73590402acf61ec874276730c67ee38683f))
+  *  force latest version & audit fix ([db7371d0](https://github.com/codetanzania/ewea-case/commit/db7371d033e175dde113551688610797fd5b1518))
+
+##### New Features
+
+* **model:**  add stage & severity field ([4b3e81df](https://github.com/codetanzania/ewea-case/commit/4b3e81df0af76f095c5e1ad2287a1f6fea714896))
+
+##### Tests
+
+* **fixtures:**  add stage & severity ([50a657f4](https://github.com/codetanzania/ewea-case/commit/50a657f488ae9c7f6653e4cbce42f535a78e963d))
+
 #### 0.3.0 (2020-06-05)
 
 ##### Chores

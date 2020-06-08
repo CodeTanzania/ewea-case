@@ -23,6 +23,46 @@ describe('Case Schema', () => {
     expect(number.options.fake).to.exist;
   });
 
+  it('should have stage field', () => {
+    const stage = Case.path('stage');
+
+    expect(stage).to.exist;
+    expect(stage).to.be.instanceof(SchemaTypes.ObjectId);
+    expect(stage.options).to.exist;
+    expect(stage.options).to.be.an('object');
+    expect(stage.options.type).to.exist;
+    expect(stage.options.ref).to.exist;
+    expect(stage.options.ref).to.be.equal(Predefine.MODEL_NAME);
+    expect(stage.options.index).to.be.true;
+    // expect(stage.options.required).to.be.true;
+    expect(stage.options.exists).to.be.true;
+    expect(stage.options.autopopulate).to.exist;
+    expect(stage.options.taggable).to.exist;
+    expect(stage.options.exportable).to.exist;
+    expect(stage.options.aggregatable).to.exist;
+    expect(stage.options.default).to.exist;
+  });
+
+  it('should have severity field', () => {
+    const severity = Case.path('severity');
+
+    expect(severity).to.exist;
+    expect(severity).to.be.instanceof(SchemaTypes.ObjectId);
+    expect(severity.options).to.exist;
+    expect(severity.options).to.be.an('object');
+    expect(severity.options.type).to.exist;
+    expect(severity.options.ref).to.exist;
+    expect(severity.options.ref).to.be.equal(Predefine.MODEL_NAME);
+    expect(severity.options.index).to.be.true;
+    // expect(severity.options.required).to.be.true;
+    expect(severity.options.exists).to.be.true;
+    expect(severity.options.autopopulate).to.exist;
+    expect(severity.options.taggable).to.exist;
+    expect(severity.options.exportable).to.exist;
+    expect(severity.options.aggregatable).to.exist;
+    expect(severity.options.default).to.exist;
+  });
+
   it('should have victim field', () => {
     const victim = Case.path('victim');
     const referral = Case.path('victim.referral');

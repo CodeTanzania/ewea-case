@@ -26,6 +26,14 @@ const cases = [
         match: { name: 'Ali Mdoe' },
         model: 'Party',
       },
+      stage: {
+        match: { namespace: 'CaseStage', 'strings.name.en': 'Confirmed' },
+        model: 'Predefine',
+      },
+      severity: {
+        match: { namespace: 'CaseSeverity', 'strings.name.en': 'Severe' },
+        model: 'Predefine',
+      },
       'victim.gender': {
         match: { namespace: 'PartyGender', 'strings.name.en': 'Female' },
         model: 'Predefine',

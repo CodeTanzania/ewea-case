@@ -15,13 +15,20 @@ import {
   CASE_OPTION_AUTOPOPULATE,
 } from './internals';
 
-import { number, description, remarks } from './schema/base.schema';
+import {
+  number,
+  stage,
+  severity,
+  description,
+  remarks,
+} from './schema/base.schema';
 import { victim, followup } from './schema/common.schema';
 import { reporter, resolver } from './schema/parties.schema';
 import { reportedAt, resolvedAt } from './schema/dates.schema';
 
 const SCHEMA = mergeObjects(
   { number },
+  { stage, severity },
   { victim },
   { description },
   { reportedAt, reporter },

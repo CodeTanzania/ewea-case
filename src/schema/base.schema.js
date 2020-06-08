@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import moment from 'moment';
 import { ObjectId } from '@lykmapipo/mongoose-common';
 import { Predefine } from '@lykmapipo/predefine';
+import { DEFAULT_SEEDS } from '@codetanzania/ewea-common';
 import { Event } from '@codetanzania/ewea-event';
 
 import { AUTOPOPULATE_OPTION_PREDEFINE, COUNTRY_CODE } from '../internals';
@@ -136,6 +137,94 @@ export const event = {
     default: 'NA',
   },
   default: undefined,
+};
+
+/**
+ * @name stage
+ * @description Currently assigned stage of a case.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} required - mark required
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - auto populate(eager loading) options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {boolean} aggregatable - allow field use for aggregation
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.4.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   _id: '5dde6ca23631a92c2d616250',
+ *   strings: { name: { en: 'Confirmed' } },
+ * }
+ */
+export const stage = {
+  type: ObjectId,
+  ref: Predefine.MODEL_NAME,
+  // required: true,
+  index: true,
+  exists: true,
+  aggregatable: { unwind: true },
+  autopopulate: AUTOPOPULATE_OPTION_PREDEFINE,
+  taggable: true,
+  exportable: {
+    format: (v) => get(v, 'strings.name.en'),
+    default: 'NA',
+  },
+  default: DEFAULT_SEEDS.CaseStage,
+};
+
+/**
+ * @name severity
+ * @description Currently assigned severity of a case.
+ *
+ * @memberof Case
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} required - mark required
+ * @property {boolean} index - ensure database index
+ * @property {boolean} exists - ensure ref exists before save
+ * @property {object} autopopulate - auto populate(eager loading) options
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} exportable - allow field use for exporting
+ * @property {boolean} aggregatable - allow field use for aggregation
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.4.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * {
+ *   _id: '5dde6ca23631a92c2d616250',
+ *   strings: { name: { en: 'Extreme' } },
+ * }
+ */
+export const severity = {
+  type: ObjectId,
+  ref: Predefine.MODEL_NAME,
+  // required: true,
+  index: true,
+  exists: true,
+  aggregatable: { unwind: true },
+  autopopulate: AUTOPOPULATE_OPTION_PREDEFINE,
+  taggable: true,
+  exportable: {
+    format: (v) => get(v, 'strings.name.en'),
+    default: 'NA',
+  },
+  default: DEFAULT_SEEDS.CaseSeverity,
 };
 
 /**
