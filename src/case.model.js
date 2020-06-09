@@ -1,13 +1,20 @@
 import {
   MODEL_NAME_CASE,
   COLLECTION_NAME_CASE,
+  PREDEFINE_NAMESPACE_CASESTAGE,
+  PREDEFINE_NAMESPACE_PARTYGENDER,
+  PREDEFINE_NAMESPACE_PARTYOCCUPATION,
+  PREDEFINE_NAMESPACE_PARTYNATIONALITY,
+  PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA,
+  DEFAULT_SEEDS,
 } from '@codetanzania/ewea-internals';
-import { pick } from 'lodash';
+import { get, pick, set } from 'lodash';
 import { mergeObjects, idOf } from '@lykmapipo/common';
-import { copyInstance, createSchema, model } from '@lykmapipo/mongoose-common';
 import '@lykmapipo/mongoose-sequenceable';
+import { copyInstance, createSchema, model } from '@lykmapipo/mongoose-common';
 import actions from 'mongoose-rest-actions';
 import exportable from '@lykmapipo/mongoose-exportable';
+import { caseSeverityFor } from '@codetanzania/ewea-common';
 
 import {
   CASE_SCHEMA_OPTIONS,
@@ -103,17 +110,47 @@ CaseSchema.pre('validate', function onPreValidate(done) {
  * @instance
  */
 CaseSchema.methods.preValidate = function preValidate(done) {
-  // ensure started(or reported) date
-  // TODO: drop reported date & use createdAt
+  // ensure reported date
   this.reportedAt = this.reportedAt || this.createdAt || new Date();
 
-  // TODO: ensure victim default gender
-  // TODO: ensure victim default occupation
+  // ensure case stage
+  if (!get(this, 'stage')) {
+    const staje = DEFAULT_SEEDS[PREDEFINE_NAMESPACE_CASESTAGE];
+    set(this, 'stage', staje);
+  }
+
+  // TODO: compute score
+  // TODO: move score to case base schema
+  // always: ensure case severity from followup score
+  const score = get(this, 'followup.score');
+  this.severity = caseSeverityFor({ score });
+
+  // ensure victim gender
+  if (!get(this, 'victim.gender')) {
+    const gender = DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYGENDER];
+    set(this, 'victim.gender', gender);
+  }
+
+  // ensure victim default occupation
+  if (!get(this, 'victim.occupation')) {
+    const occupation = DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYOCCUPATION];
+    set(this, 'victim.occupation', occupation);
+  }
+
+  // ensure victim default nationality
+  if (!get(this, 'victim.nationality')) {
+    const nationality = DEFAULT_SEEDS[PREDEFINE_NAMESPACE_PARTYNATIONALITY];
+    set(this, 'victim.nationality', nationality);
+  }
+
+  // ensure victim default area
+  if (!get(this, 'victim.area')) {
+    const area = DEFAULT_SEEDS[PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA];
+    set(this, 'victim.area', area);
+  }
 
   // TODO: ensure event group and type
-
   // TODO: ensure default values
-
   // TODO: ensure case status
 
   // return
