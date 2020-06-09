@@ -1,3 +1,7 @@
+import {
+  PREDEFINE_NAMESPACE_CASESEVERITY,
+  PREDEFINE_NAMESPACE_CASESTAGE,
+} from '@codetanzania/ewea-internals';
 import { get } from 'lodash';
 import moment from 'moment';
 import { ObjectId } from '@lykmapipo/mongoose-common';
@@ -180,7 +184,7 @@ export const stage = {
     format: (v) => get(v, 'strings.name.en'),
     default: 'NA',
   },
-  default: DEFAULT_SEEDS.CaseStage,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_CASESTAGE],
 };
 
 /**
@@ -224,7 +228,7 @@ export const severity = {
     format: (v) => get(v, 'strings.name.en'),
     default: 'NA',
   },
-  default: DEFAULT_SEEDS.CaseSeverity,
+  default: DEFAULT_SEEDS[PREDEFINE_NAMESPACE_CASESEVERITY],
 };
 
 /**

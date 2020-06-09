@@ -20,6 +20,20 @@ describe('Case Instance', () => {
       done(error);
     });
   });
+
+  it('should set defaults on pre validate', (done) => {
+    const caze = Case.fake();
+
+    caze.preValidate((error) => {
+      expect(caze.stage).to.exist;
+      expect(caze.severity).to.exist;
+      expect(caze.victim.gender).to.exist;
+      expect(caze.victim.occupation).to.exist;
+      expect(caze.victim.nationality).to.exist;
+      expect(caze.victim.area).to.exist;
+      done(error);
+    });
+  });
 });
 
 describe.skip('Case Validations', () => {

@@ -99,7 +99,7 @@ export const age = {
   type: Number,
   index: true,
   exportable: true,
-  fake: (f) => f.random.number(),
+  fake: (f) => f.random.number({ min: 1, max: 100 }),
 };
 
 /**
@@ -123,7 +123,32 @@ export const weight = {
   type: Number,
   index: true,
   exportable: true,
-  fake: (f) => f.random.number(),
+  fake: (f) => f.random.number({ min: 1, max: 250 }),
+};
+
+/**
+ * @name score
+ * @description Current score of the case followup.
+ *
+ * It used to derive case severity.
+ *
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} index - ensure database index
+ * @property {object} fake - fake data generator options
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * 4
+ */
+export const score = {
+  type: Number,
+  index: true,
+  exportable: true,
+  fake: (f) => f.random.number({ min: 0, max: 5 }),
 };
 
 /**
@@ -585,6 +610,7 @@ export const followup = createSubSchema({
   follower,
   followedAt,
   symptoms: properties,
+  score,
   outcome,
   remarks,
 });
