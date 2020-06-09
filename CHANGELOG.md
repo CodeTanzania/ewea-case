@@ -1,3 +1,17 @@
+#### 0.4.0 (2020-06-09)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([ce29d4a3](https://github.com/codetanzania/ewea-case/commit/ce29d4a3e7c3a804e9f8e7b5e5b691ff66d4c163))
+
+##### New Features
+
+* **model:**  ensure severity from computed score ([96d105ba](https://github.com/codetanzania/ewea-case/commit/96d105ba3cb297141793aa5103b68112be6d308f))
+
+##### Refactors
+
+* **model:**  use namespaced defaults ([cd6a0f16](https://github.com/codetanzania/ewea-case/commit/cd6a0f1648d6760339afed7a86f786bf5905af94))
+
 #### 0.4.0 (2020-06-08)
 
 ##### Chores
