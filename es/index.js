@@ -1,6 +1,6 @@
 import { COLLECTION_NAME_CASE, POPULATION_MAX_DEPTH, PREDEFINE_NAMESPACE_CASESTAGE, PREDEFINE_NAMESPACE_CASESEVERITY, PREDEFINE_NAMESPACE_ADMINISTRATIVEAREA, PREDEFINE_NAMESPACE_PARTYGENDER, PREDEFINE_NAMESPACE_PARTYOCCUPATION, PREDEFINE_NAMESPACE_PARTYNATIONALITY, MODEL_NAME_CASE, DEFAULT_SEEDS as DEFAULT_SEEDS$1 } from '@codetanzania/ewea-internals';
 import { compact, mergeObjects, idOf, pkg } from '@lykmapipo/common';
-import { getString, apiVersion as apiVersion$1 } from '@lykmapipo/env';
+import { getString, getStrings, apiVersion as apiVersion$1 } from '@lykmapipo/env';
 import { ObjectId, createSubSchema, Mixed, model, createSchema, copyInstance, connect } from '@lykmapipo/mongoose-common';
 import { mount } from '@lykmapipo/express-common';
 import { Router, getFor, schemaFor, downloadFor, postFor, getByIdFor, patchFor, putFor, deleteFor, start as start$1 } from '@lykmapipo/express-rest-actions';
@@ -669,6 +669,9 @@ const followedAt = {
   },
 };
 
+const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
+const LOCALES = getStrings('LOCALES', DEFAULT_LOCALE);
+
 /**
  * @name properties
  * @description A map of key value pairs to allow to associate
@@ -696,12 +699,47 @@ const properties = {
 };
 
 /**
+ * @name locale
+ * @description Defines the party's language, region and any
+ * special variant preferences.
+ *
+ * @see {@link https://en.wikipedia.org/wiki/Locale_(computer_software)}
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} enum - list of acceptable values
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * en
+ */
+const locale = {
+  type: String,
+  trim: true,
+  enum: LOCALES,
+  index: true,
+  searchable: true,
+  taggable: true,
+  default: DEFAULT_LOCALE,
+  fake: true,
+};
+
+/**
  * @name name
  * @description Full name name of the party(i.e individual).
  *
  *
  * @property {object} type - schema(data) type
  * @property {boolean} trim - force trimming
+ * @property {boolean} startcase - ensure start case(or title case)
  * @property {boolean} index - ensure database index
  * @property {boolean} searchable - allow for searching
  * @property {boolean} taggable - allow field use for tagging
@@ -718,6 +756,7 @@ const properties = {
 const name = {
   type: String,
   trim: true,
+  startcase: true,
   index: true,
   searchable: true,
   taggable: true,
@@ -802,7 +841,7 @@ const score = {
 };
 
 /**
- * @name phone
+ * @name mobile
  * @description A mobile phone number of the party(i.e individual).
  *
  * @property {object} type - schema(data) type
@@ -827,7 +866,39 @@ const mobile = {
   searchable: true,
   taggable: true,
   exportable: true,
-  fake: (faker) => faker.helpers.replaceSymbolWithNumber('255714######'),
+  fake: (f) => f.helpers.replaceSymbolWithNumber('255714######'),
+};
+
+/**
+ * @name email
+ * @description Email address of the party(i.e individual).
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} lowercase - force lower-casing
+ * @property {boolean} email - force to be a valid email address
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * jane.doe@example.com
+ */
+const email = {
+  type: String,
+  trim: true,
+  lowercase: true,
+  email: true,
+  index: true,
+  searchable: true,
+  taggable: true,
+  exportable: true,
+  fake: (f) => f.internet.email(),
 };
 
 /**
@@ -1131,12 +1202,10 @@ const nationality = {
  * @description A party who closest to a victim.
  *
  * @type {object}
- * @property {string} name - Full name of the nextOfKin
- * @property {string} mobile - Mobile phone number of the nextOfKin
- * @property {object} facility - Facility of the nextOfKin
- * @property {object} area - Administrative area of the nextOfKin
- * @property {object} location - Geo-point of the nextOfKin
- * @property {string} address - Address of the nextOfKin
+ * @property {string} name - Full name of the next of kin
+ * @property {string} mobile - Mobile phone number of the next of kin
+ * @property {string} email - Email address of the next of kin
+ * @property {string} locale - Locale of the next of kin
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -1146,11 +1215,16 @@ const nationality = {
  * {
  *   name: "Jane Doe",
  *   mobile: "+255715463739"
+ *   email: "jane.doe@example.com"
+ *   locale: "en"
  * }
  */
 const nextOfKin = createSubSchema({
   name,
   mobile,
+  email,
+  locale,
+  // csids,
 });
 
 /**
@@ -1162,12 +1236,14 @@ const nextOfKin = createSubSchema({
  * @property {string} pcr - Valid patient care number
  * @property {string} name - Full name of the victim
  * @property {string} mobile - Mobile phone number of the victim
+ * @property {string} email - Email address of the victim
  * @property {object} gender - Gender of the victim
  * @property {number} age - Age of the victim
  * @property {number} weight - Weight of the victim
  * @property {object} occupation - Occupation of the victim
  * @property {object} nationality - Nationality of the victim
  * @property {string} address - Address of the victim
+ * @property {string} locale - Locale of the victim
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -1179,6 +1255,7 @@ const nextOfKin = createSubSchema({
  *   pcr: "PTN-8687",
  *   name: "Jane Doe",
  *   mobile: "+255715463739",
+ *   email: "jane.doe@example.com",
  *   gender: { name: { en: "Female"} },
  *   age: 23,
  *   weight: 53,
@@ -1186,6 +1263,7 @@ const nextOfKin = createSubSchema({
  *   nationality: { name: { en: "Tanzanian"} },
  *   address: "Tandale",
  *   area: { name: { en: "Dar es Salaam"} },
+ *   locale: "en",
  *   nextOfKin: { name: "Halima Mdoe", mobile: "+255715463740" }
  * }
  */
@@ -1194,6 +1272,7 @@ const victim = createSubSchema({
   pcr,
   name,
   mobile,
+  email,
   gender,
   age,
   // dob
@@ -1202,24 +1281,18 @@ const victim = createSubSchema({
   nationality,
   address,
   area,
+  locale,
   nextOfKin,
+  // csids.
 });
 
 /**
- * @name victim
- * @description A party(i.e patient or victim) whom a case is for.
+ * @name followup
+ * @description A party(i.e doctor or nurse) who followed case victim.
  *
  * @type {object}
- * @property {string} referral - Valid referral number
- * @property {string} pcr - Valid patient care number
- * @property {string} name - Full name of the victim
- * @property {string} mobile - Mobile phone number of the victim
- * @property {object} gender - Gender of the victim
- * @property {number} age - Age of the victim
- * @property {number} weight - Weight of the victim
- * @property {object} occupation - Occupation of the victim
- * @property {object} nationality - Nationality of the victim
- * @property {string} address - Address of the victim
+ * @property {object} follower - Following party
+ * @property {Date} followedAt - Latest date followed
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -1238,7 +1311,7 @@ const followup = createSubSchema({
   follower,
   followedAt,
   symptoms: properties,
-  score,
+  score, // TODO: systemScore vs followerScore
   outcome,
   remarks,
 });
