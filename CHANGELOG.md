@@ -1,3 +1,15 @@
+#### 0.6.0 (2020-06-11)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([5637f7a2](https://github.com/codetanzania/ewea-case/commit/5637f7a248f648d4be38172db24fb7615820503f))
+
+##### New Features
+
+* **model:**
+  *  add victim & next of kin locales ([bd47174f](https://github.com/codetanzania/ewea-case/commit/bd47174f05da4d226193496eee1c579b10ed4bc5))
+  *  add email to victim & next of kin ([2e494707](https://github.com/codetanzania/ewea-case/commit/2e494707f591f489ad07a64f0f3609921d67a455))
+
 #### 0.5.0 (2020-06-09)
 
 ##### Chores
