@@ -73,9 +73,11 @@ describe('Case Schema', () => {
     const gender = Case.path('victim.gender');
     const occupation = Case.path('victim.occupation');
     const nationality = Case.path('victim.nationality');
+    const locale = Case.path('victim.locale');
     const nextOfKinName = Case.path('victim.nextOfKin.name');
     const nextOfKinMobile = Case.path('victim.nextOfKin.mobile');
     const nextOfKinEmail = Case.path('victim.nextOfKin.email');
+    const nextOfKinLocale = Case.path('victim.nextOfKin.locale');
 
     expect(victim).to.exist;
     expect(victim).to.be.an.instanceof(SchemaTypes.Embedded);
@@ -189,6 +191,17 @@ describe('Case Schema', () => {
     expect(nationality.options.aggregatable).to.exist;
     expect(nationality.options.default).to.exist;
 
+    expect(locale).to.exist;
+    expect(locale).to.be.an.instanceof(SchemaTypes.String);
+    expect(locale.options).to.exist;
+    expect(locale.options).to.be.an('object');
+    expect(locale.options.type).to.exist;
+    expect(locale.options.trim).to.be.true;
+    expect(locale.options.enum).to.be.exist;
+    expect(locale.options.index).to.be.true;
+    expect(locale.options.searchable).to.be.true;
+    expect(locale.options.fake).to.exist;
+
     expect(nextOfKinName).to.exist;
     expect(nextOfKinName).to.be.instanceof(SchemaTypes.String);
     expect(nextOfKinName.options).to.exist;
@@ -225,6 +238,17 @@ describe('Case Schema', () => {
     expect(nextOfKinEmail.options.taggable).to.be.true;
     expect(nextOfKinEmail.options.exportable).to.be.true;
     expect(nextOfKinEmail.options.fake).to.exist;
+
+    expect(nextOfKinLocale).to.exist;
+    expect(nextOfKinLocale).to.be.an.instanceof(SchemaTypes.String);
+    expect(nextOfKinLocale.options).to.exist;
+    expect(nextOfKinLocale.options).to.be.an('object');
+    expect(nextOfKinLocale.options.type).to.exist;
+    expect(nextOfKinLocale.options.trim).to.be.true;
+    expect(nextOfKinLocale.options.enum).to.be.exist;
+    expect(nextOfKinLocale.options.index).to.be.true;
+    expect(nextOfKinLocale.options.searchable).to.be.true;
+    expect(nextOfKinLocale.options.fake).to.exist;
   });
 
   it('should have description field', () => {

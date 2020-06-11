@@ -6,6 +6,7 @@ import {
 } from '@codetanzania/ewea-internals';
 import { DEFAULT_SEEDS } from '@codetanzania/ewea-common';
 import { compact } from '@lykmapipo/common';
+import { getString, getStrings } from '@lykmapipo/env';
 import { Point } from 'mongoose-geojson-schemas';
 import { ObjectId, Mixed, createSubSchema } from '@lykmapipo/mongoose-common';
 import { Predefine } from '@lykmapipo/predefine';
@@ -18,6 +19,9 @@ import {
 import { follower } from './parties.schema';
 import { followedAt } from './dates.schema';
 import { outcome, remarks } from './base.schema';
+
+const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
+const LOCALES = getStrings('LOCALES', DEFAULT_LOCALE);
 
 /**
  * @name properties
@@ -43,6 +47,40 @@ export const properties = {
   type: Map,
   of: Mixed,
   fake: (f) => f.helpers.createTransaction(),
+};
+
+/**
+ * @name locale
+ * @description Defines the party's language, region and any
+ * special variant preferences.
+ *
+ * @see {@link https://en.wikipedia.org/wiki/Locale_(computer_software)}
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} enum - list of acceptable values
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {boolean} default - default value set when none provided
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * en
+ */
+export const locale = {
+  type: String,
+  trim: true,
+  enum: LOCALES,
+  index: true,
+  searchable: true,
+  taggable: true,
+  default: DEFAULT_LOCALE,
+  fake: true,
 };
 
 /**
@@ -539,7 +577,8 @@ export const nationality = {
  * @type {object}
  * @property {string} name - Full name of the next of kin
  * @property {string} mobile - Mobile phone number of the next of kin
- * @property {string} email - Email address of the victim
+ * @property {string} email - Email address of the next of kin
+ * @property {string} locale - Locale of the next of kin
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -550,12 +589,15 @@ export const nationality = {
  *   name: "Jane Doe",
  *   mobile: "+255715463739"
  *   email: "jane.doe@example.com"
+ *   locale: "en"
  * }
  */
 export const nextOfKin = createSubSchema({
   name,
   mobile,
   email,
+  locale,
+  // csids,
 });
 
 /**
@@ -574,6 +616,7 @@ export const nextOfKin = createSubSchema({
  * @property {object} occupation - Occupation of the victim
  * @property {object} nationality - Nationality of the victim
  * @property {string} address - Address of the victim
+ * @property {string} locale - Locale of the victim
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -593,6 +636,7 @@ export const nextOfKin = createSubSchema({
  *   nationality: { name: { en: "Tanzanian"} },
  *   address: "Tandale",
  *   area: { name: { en: "Dar es Salaam"} },
+ *   locale: "en",
  *   nextOfKin: { name: "Halima Mdoe", mobile: "+255715463740" }
  * }
  */
@@ -610,7 +654,9 @@ export const victim = createSubSchema({
   nationality,
   address,
   area,
+  locale,
   nextOfKin,
+  // csids.
 });
 
 /**
