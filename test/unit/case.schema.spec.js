@@ -69,11 +69,15 @@ describe('Case Schema', () => {
     const pcr = Case.path('victim.pcr');
     const name = Case.path('victim.name');
     const mobile = Case.path('victim.mobile');
+    const email = Case.path('victim.email');
     const gender = Case.path('victim.gender');
     const occupation = Case.path('victim.occupation');
     const nationality = Case.path('victim.nationality');
+    const locale = Case.path('victim.locale');
     const nextOfKinName = Case.path('victim.nextOfKin.name');
     const nextOfKinMobile = Case.path('victim.nextOfKin.mobile');
+    const nextOfKinEmail = Case.path('victim.nextOfKin.email');
+    const nextOfKinLocale = Case.path('victim.nextOfKin.locale');
 
     expect(victim).to.exist;
     expect(victim).to.be.an.instanceof(SchemaTypes.Embedded);
@@ -126,6 +130,19 @@ describe('Case Schema', () => {
     expect(mobile.options.exportable).to.be.true;
     expect(mobile.options.fake).to.exist;
 
+    expect(email).to.exist;
+    expect(email).to.be.instanceof(SchemaTypes.String);
+    expect(email.options).to.exist;
+    expect(email.options).to.be.an('object');
+    expect(email.options.type).to.exist;
+    expect(email.options.trim).to.be.true;
+    expect(email.options.email).to.be.true;
+    expect(email.options.index).to.be.true;
+    expect(email.options.searchable).to.be.true;
+    expect(email.options.taggable).to.be.true;
+    expect(email.options.exportable).to.be.true;
+    expect(email.options.fake).to.exist;
+
     expect(gender).to.exist;
     expect(gender).to.be.instanceof(SchemaTypes.ObjectId);
     expect(gender.options).to.exist;
@@ -174,6 +191,17 @@ describe('Case Schema', () => {
     expect(nationality.options.aggregatable).to.exist;
     expect(nationality.options.default).to.exist;
 
+    expect(locale).to.exist;
+    expect(locale).to.be.an.instanceof(SchemaTypes.String);
+    expect(locale.options).to.exist;
+    expect(locale.options).to.be.an('object');
+    expect(locale.options.type).to.exist;
+    expect(locale.options.trim).to.be.true;
+    expect(locale.options.enum).to.be.exist;
+    expect(locale.options.index).to.be.true;
+    expect(locale.options.searchable).to.be.true;
+    expect(locale.options.fake).to.exist;
+
     expect(nextOfKinName).to.exist;
     expect(nextOfKinName).to.be.instanceof(SchemaTypes.String);
     expect(nextOfKinName.options).to.exist;
@@ -197,6 +225,30 @@ describe('Case Schema', () => {
     expect(nextOfKinMobile.options.taggable).to.be.true;
     expect(nextOfKinMobile.options.exportable).to.be.true;
     expect(nextOfKinMobile.options.fake).to.exist;
+
+    expect(nextOfKinEmail).to.exist;
+    expect(nextOfKinEmail).to.be.instanceof(SchemaTypes.String);
+    expect(nextOfKinEmail.options).to.exist;
+    expect(nextOfKinEmail.options).to.be.an('object');
+    expect(nextOfKinEmail.options.type).to.exist;
+    expect(nextOfKinEmail.options.trim).to.be.true;
+    expect(nextOfKinEmail.options.email).to.be.true;
+    expect(nextOfKinEmail.options.index).to.be.true;
+    expect(nextOfKinEmail.options.searchable).to.be.true;
+    expect(nextOfKinEmail.options.taggable).to.be.true;
+    expect(nextOfKinEmail.options.exportable).to.be.true;
+    expect(nextOfKinEmail.options.fake).to.exist;
+
+    expect(nextOfKinLocale).to.exist;
+    expect(nextOfKinLocale).to.be.an.instanceof(SchemaTypes.String);
+    expect(nextOfKinLocale.options).to.exist;
+    expect(nextOfKinLocale.options).to.be.an('object');
+    expect(nextOfKinLocale.options.type).to.exist;
+    expect(nextOfKinLocale.options.trim).to.be.true;
+    expect(nextOfKinLocale.options.enum).to.be.exist;
+    expect(nextOfKinLocale.options.index).to.be.true;
+    expect(nextOfKinLocale.options.searchable).to.be.true;
+    expect(nextOfKinLocale.options.fake).to.exist;
   });
 
   it('should have description field', () => {
