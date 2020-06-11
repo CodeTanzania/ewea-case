@@ -69,11 +69,13 @@ describe('Case Schema', () => {
     const pcr = Case.path('victim.pcr');
     const name = Case.path('victim.name');
     const mobile = Case.path('victim.mobile');
+    const email = Case.path('victim.email');
     const gender = Case.path('victim.gender');
     const occupation = Case.path('victim.occupation');
     const nationality = Case.path('victim.nationality');
     const nextOfKinName = Case.path('victim.nextOfKin.name');
     const nextOfKinMobile = Case.path('victim.nextOfKin.mobile');
+    const nextOfKinEmail = Case.path('victim.nextOfKin.email');
 
     expect(victim).to.exist;
     expect(victim).to.be.an.instanceof(SchemaTypes.Embedded);
@@ -125,6 +127,19 @@ describe('Case Schema', () => {
     expect(mobile.options.taggable).to.be.true;
     expect(mobile.options.exportable).to.be.true;
     expect(mobile.options.fake).to.exist;
+
+    expect(email).to.exist;
+    expect(email).to.be.instanceof(SchemaTypes.String);
+    expect(email.options).to.exist;
+    expect(email.options).to.be.an('object');
+    expect(email.options.type).to.exist;
+    expect(email.options.trim).to.be.true;
+    expect(email.options.email).to.be.true;
+    expect(email.options.index).to.be.true;
+    expect(email.options.searchable).to.be.true;
+    expect(email.options.taggable).to.be.true;
+    expect(email.options.exportable).to.be.true;
+    expect(email.options.fake).to.exist;
 
     expect(gender).to.exist;
     expect(gender).to.be.instanceof(SchemaTypes.ObjectId);
@@ -197,6 +212,19 @@ describe('Case Schema', () => {
     expect(nextOfKinMobile.options.taggable).to.be.true;
     expect(nextOfKinMobile.options.exportable).to.be.true;
     expect(nextOfKinMobile.options.fake).to.exist;
+
+    expect(nextOfKinEmail).to.exist;
+    expect(nextOfKinEmail).to.be.instanceof(SchemaTypes.String);
+    expect(nextOfKinEmail.options).to.exist;
+    expect(nextOfKinEmail.options).to.be.an('object');
+    expect(nextOfKinEmail.options.type).to.exist;
+    expect(nextOfKinEmail.options.trim).to.be.true;
+    expect(nextOfKinEmail.options.email).to.be.true;
+    expect(nextOfKinEmail.options.index).to.be.true;
+    expect(nextOfKinEmail.options.searchable).to.be.true;
+    expect(nextOfKinEmail.options.taggable).to.be.true;
+    expect(nextOfKinEmail.options.exportable).to.be.true;
+    expect(nextOfKinEmail.options.fake).to.exist;
   });
 
   it('should have description field', () => {

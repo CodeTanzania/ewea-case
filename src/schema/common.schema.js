@@ -52,6 +52,7 @@ export const properties = {
  *
  * @property {object} type - schema(data) type
  * @property {boolean} trim - force trimming
+ * @property {boolean} startcase - ensure start case(or title case)
  * @property {boolean} index - ensure database index
  * @property {boolean} searchable - allow for searching
  * @property {boolean} taggable - allow field use for tagging
@@ -68,6 +69,7 @@ export const properties = {
 export const name = {
   type: String,
   trim: true,
+  startcase: true,
   index: true,
   searchable: true,
   taggable: true,
@@ -152,7 +154,7 @@ export const score = {
 };
 
 /**
- * @name phone
+ * @name mobile
  * @description A mobile phone number of the party(i.e individual).
  *
  * @property {object} type - schema(data) type
@@ -177,7 +179,39 @@ export const mobile = {
   searchable: true,
   taggable: true,
   exportable: true,
-  fake: (faker) => faker.helpers.replaceSymbolWithNumber('255714######'),
+  fake: (f) => f.helpers.replaceSymbolWithNumber('255714######'),
+};
+
+/**
+ * @name email
+ * @description Email address of the party(i.e individual).
+ *
+ * @type {object}
+ * @property {object} type - schema(data) type
+ * @property {boolean} trim - force trimming
+ * @property {boolean} lowercase - force lower-casing
+ * @property {boolean} email - force to be a valid email address
+ * @property {boolean} index - ensure database index
+ * @property {boolean} searchable - allow for searching
+ * @property {boolean} taggable - allow field use for tagging
+ * @property {object} fake - fake data generator options
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ * @instance
+ * @example
+ * jane.doe@example.com
+ */
+export const email = {
+  type: String,
+  trim: true,
+  lowercase: true,
+  email: true,
+  index: true,
+  searchable: true,
+  taggable: true,
+  exportable: true,
+  fake: (f) => f.internet.email(),
 };
 
 /**
@@ -503,12 +537,9 @@ export const nationality = {
  * @description A party who closest to a victim.
  *
  * @type {object}
- * @property {string} name - Full name of the nextOfKin
- * @property {string} mobile - Mobile phone number of the nextOfKin
- * @property {object} facility - Facility of the nextOfKin
- * @property {object} area - Administrative area of the nextOfKin
- * @property {object} location - Geo-point of the nextOfKin
- * @property {string} address - Address of the nextOfKin
+ * @property {string} name - Full name of the next of kin
+ * @property {string} mobile - Mobile phone number of the next of kin
+ * @property {string} email - Email address of the victim
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -518,11 +549,13 @@ export const nationality = {
  * {
  *   name: "Jane Doe",
  *   mobile: "+255715463739"
+ *   email: "jane.doe@example.com"
  * }
  */
 export const nextOfKin = createSubSchema({
   name,
   mobile,
+  email,
 });
 
 /**
@@ -534,6 +567,7 @@ export const nextOfKin = createSubSchema({
  * @property {string} pcr - Valid patient care number
  * @property {string} name - Full name of the victim
  * @property {string} mobile - Mobile phone number of the victim
+ * @property {string} email - Email address of the victim
  * @property {object} gender - Gender of the victim
  * @property {number} age - Age of the victim
  * @property {number} weight - Weight of the victim
@@ -551,6 +585,7 @@ export const nextOfKin = createSubSchema({
  *   pcr: "PTN-8687",
  *   name: "Jane Doe",
  *   mobile: "+255715463739",
+ *   email: "jane.doe@example.com",
  *   gender: { name: { en: "Female"} },
  *   age: 23,
  *   weight: 53,
@@ -566,6 +601,7 @@ export const victim = createSubSchema({
   pcr,
   name,
   mobile,
+  email,
   gender,
   age,
   // dob
@@ -578,20 +614,12 @@ export const victim = createSubSchema({
 });
 
 /**
- * @name victim
- * @description A party(i.e patient or victim) whom a case is for.
+ * @name followup
+ * @description A party(i.e doctor or nurse) who followed case victim.
  *
  * @type {object}
- * @property {string} referral - Valid referral number
- * @property {string} pcr - Valid patient care number
- * @property {string} name - Full name of the victim
- * @property {string} mobile - Mobile phone number of the victim
- * @property {object} gender - Gender of the victim
- * @property {number} age - Age of the victim
- * @property {number} weight - Weight of the victim
- * @property {object} occupation - Occupation of the victim
- * @property {object} nationality - Nationality of the victim
- * @property {string} address - Address of the victim
+ * @property {object} follower - Following party
+ * @property {Date} followedAt - Latest date followed
  *
  * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
@@ -610,7 +638,7 @@ export const followup = createSubSchema({
   follower,
   followedAt,
   symptoms: properties,
-  score,
+  score, // TODO: systemScore vs followerScore
   outcome,
   remarks,
 });
