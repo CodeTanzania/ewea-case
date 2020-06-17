@@ -50,3 +50,12 @@ export const AUTOPOPULATE_OPTION_PARTY = {
   select: { name: 1, email: 1, mobile: 1, abbreviation: 1, role: 1 },
   maxDepth: 2,
 };
+
+export const sendFollowupRequest = () => {
+  // TODO: if requested has no campaign
+  // TODO: if request.campaign failed
+};
+export const sendFollowupResult = () => {
+  // TODO: if verified has no campaign
+  // TODO: if verifiried.campaign failed
+};

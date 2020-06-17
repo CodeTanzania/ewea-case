@@ -34,7 +34,7 @@ import { reporter, resolver } from './schema/parties.schema';
 import { reportedAt, resolvedAt } from './schema/dates.schema';
 
 const SCHEMA = mergeObjects(
-  { number },
+  { number }, // TODO: occured location
   { stage, severity },
   { victim },
   { description },

@@ -656,7 +656,9 @@ export const victim = createSubSchema({
   area,
   locale,
   nextOfKin,
-  // csids.
+  // TODO: csids.
+  // TODO: lastKnownLocation
+  // TODO: lastKnownAddress
 });
 
 /**
@@ -683,7 +685,7 @@ export const victim = createSubSchema({
 export const followup = createSubSchema({
   follower,
   followedAt,
-  symptoms: properties,
+  symptoms: properties, // TODO: rename to data/instance/results
   score, // TODO: systemScore vs followerScore
   outcome,
   remarks,
