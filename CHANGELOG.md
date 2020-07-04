@@ -1,3 +1,13 @@
+#### 0.6.2 (2020-07-04)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([9747f96f](https://github.com/codetanzania/ewea-case/commit/9747f96fcdaf380be8bc4e01c9b76d772744ab62))
+
+##### Refactors
+
+*  update test env & dependencies ([556b23d4](https://github.com/codetanzania/ewea-case/commit/556b23d416b4e5be5b384040e14ae354168eb166))
+
 #### 0.6.1 (2020-06-15)
 
 ##### Chores

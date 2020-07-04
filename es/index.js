@@ -1283,7 +1283,9 @@ const victim = createSubSchema({
   area,
   locale,
   nextOfKin,
-  // csids.
+  // TODO: csids.
+  // TODO: lastKnownLocation
+  // TODO: lastKnownAddress
 });
 
 /**
@@ -1310,14 +1312,14 @@ const victim = createSubSchema({
 const followup = createSubSchema({
   follower,
   followedAt,
-  symptoms: properties,
+  symptoms: properties, // TODO: rename to data/instance/results
   score, // TODO: systemScore vs followerScore
   outcome,
   remarks,
 });
 
 const SCHEMA = mergeObjects(
-  { number },
+  { number }, // TODO: occured location
   { stage, severity },
   { victim },
   { description },
