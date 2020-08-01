@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/ewea-case",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A representation of an entity which define and track cases during an emergency event.",
   "main": "lib/index.js",
   "module": "es/index.js",
