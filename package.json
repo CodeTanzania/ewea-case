@@ -79,7 +79,7 @@
     "csv-parse": "^4.11.1",
     "csv-to-array": "^1.0.2",
     "cz-conventional-changelog": "^3.2.0",
-    "doxdox": "^3.0.0",
+    "doxdox": "^4.0.0-preview.25",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
